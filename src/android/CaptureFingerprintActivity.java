@@ -83,6 +83,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
     private String productName;
     private String vendorName;
     private int nfiqScore;
+    private String fingerPngB64;
 
 
     private void initializeActivity() {
@@ -424,7 +425,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
         Fid ISOFid = cap_result.image;
         byte[] wsqRawCompress = processImage(ISOFid.getViews()[0].getData(), ISOFid.getViews()[0].getWidth(), ISOFid.getViews()[0].getHeight());
         String wsqBase64 = Utils.formatWsqToBase64(wsqRawCompress);
-        String fingerPngB64 = getPngBase64FromFid(ISOFid, true); // true = 512x512 centrado
+        fingerPngB64 = getPngBase64FromFid(ISOFid, true); // true = 512x512 centrado
 
         Intent i = new Intent();
         
