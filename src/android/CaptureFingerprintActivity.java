@@ -299,6 +299,9 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
                 try {
                     m_reset = false;
                     while (!m_reset) {
+                        // resetear qualityFinger en cada iteración
+                        qualityFinger = null;
+                        
                         // capture the image
                         cap_result = m_reader.Capture(Fid.Format.ANSI_381_2004, Globals.DefaultImageProcessing, m_DPI, -1);
 
