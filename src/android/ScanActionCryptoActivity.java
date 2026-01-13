@@ -123,7 +123,7 @@ private String clean(String s) {
             i.putExtra("instructions", instructions);
             i.putExtra("right_finger", hright);
             i.putExtra("left_finger", hleft);
-            intent.putExtra("flag_ff", flagFakeFinger);
+            i.putExtra("flag_ff", flagFakeFinger);
             startActivityForResult(i, eikon_step);
         }
     }
