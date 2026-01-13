@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <TextView
+        android:id="@+id/fingerprintBrand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="12dp"
+        android:text="Secugen"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/cvContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/login_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="12dp"
+        android:text="Versión no accesible"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/cvContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="-20dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/AbsoluteLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:id="@+id/llBestFingers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Coloca el dedo: "
+                    android:textAlignment="textEnd" />
+
+                <TextView
+                    android:id="@+id/tvFinger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:textStyle="bold"
+                    tools:text="MEDIO IZQUIERDO O INDICE DERECHO" />
+            </LinearLayout>
+
+            <ToggleButton
+                android:id="@+id/toggleButtonAutoOn2"
+                android:layout_width="261dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/entel_btn_bg_orange"
+                android:text="Tomando huella"
+                android:textColor="#FFFFFF"
+                android:textOff="Volver a tomar huella"
+                android:textOn="@string/auto_on_enabled"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="@string/log"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/buttonRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register"
+                android:textSize="28sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/buttonMatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/match"
+                android:textSize="28sp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imageViewVerify"
+                android:layout_width="130dp"
+                android:layout_height="150dp"
+                android:contentDescription="@string/fingerprint_verify_image"
+                android:src="@android:drawable/picture_frame"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/buttonLedOn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ledon"
+                android:textSize="28sp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imageViewRegister"
+                android:layout_width="130dp"
+                android:layout_height="150dp"
+                android:contentDescription="@string/fingerprint_register_image"
+                android:src="@android:drawable/picture_frame"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/buttonSDKTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sdktest"
+                android:textSize="36sp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/editLog"
+                android:layout_width="372dp"
+                android:layout_height="533dp"
+                android:inputType="none|textMultiLine"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imageViewFingerprint"
+                android:layout_width="208dp"
+                android:layout_height="240dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="20dp"
+                android:contentDescription="@string/fingerprint_capture_image"
+                android:src="@android:drawable/picture_frame" />
+
+            <CheckBox
+                android:id="@+id/checkBoxMatched"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cb_matched"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textViewResult"
+                android:layout_width="291dp"
+                android:layout_height="wrap_content"
+                android:text="@string/welcome"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="155dp"
+                android:layout_height="155dp"
+                android:contentDescription="@string/secugen_device_image"
+                android:src="@drawable/hamster4"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/buttonCapture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/capture"
+                android:textSize="28sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/closeactivity"
+                android:layout_width="261dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/entel_btn_bg_orange"
+                android:text="Terminar"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonCaptureModeN"
+                android:layout_width="122dp"
+                android:layout_height="wrap_content"
+                android:text="@string/capture_mode_n_off"
+                android:textOff="@string/capture_mode_n_off"
+                android:textOn="@string/capture_mode_n_on"
+                android:visibility="gone" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonSmartCapture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/smart_capture"
+                android:textOff="@string/smart_capture_off"
+                android:textOn="@string/smart_capture_on"
+                android:visibility="gone" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonNFIQ"
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:text="@string/NFIQ_disabled"
+                android:textOff="@string/NFIQ_disabled"
+                android:textOn="@string/NFIQ_enabled"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/buttonSetBrightness100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_brightness_100"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/buttonReadSN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/read_serial_number"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/buttonSetBrightness0"
+                android:layout_width="174dp"
+                android:layout_height="wrap_content"
+                android:text="@string/set_brightness_0"
+                android:visibility="gone" />
+
+            <ToggleButton
+                android:id="@+id/ToggleButtonUSBBulkMode64"
+                android:layout_width="174dp"
+                android:layout_height="wrap_content"
+                android:text="@string/usb_bulk_mode_64_off"
+                android:textOff="@string/usb_bulk_mode_64_off"
+                android:textOn="@string/usb_bulk_mode_64_on"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

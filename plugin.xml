@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="biometric-entel" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://apache.org/cordova/ns/plugins/1.0 ">
+    <name>BiometricCordova</name>
+    <js-module name="BiometricCordova" src="www/BiometricCordova.js">
+        <clobbers target="BiometricCordova" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="BiometricCordova">
+                <param name="android-package" value="biometric.entel.BiometricCordova" />
+            </feature>
+        </config-file>
+
+        <!-- Permisos -->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+            <uses-feature android:name="android.hardware.fingerprint" />
+        </config-file>
+        
+        <!-- Actividades - MODIFICADO -->
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+
+            <activity
+                android:name="biometric.entel.GetReaderActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:label="@string/app_name"
+                android:exported="true">
+                <intent-filter>
+                    <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+                </intent-filter>
+                <meta-data
+                    android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                    android:resource="@xml/device_filter" />
+            </activity>
+
+            <activity
+                android:name="biometric.entel.CaptureFingerprintActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:label="@string/app_name"
+                android:screenOrientation="portrait"
+                android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"
+                android:exported="false" />
+
+            <activity
+                android:name="biometric.entel.ScanActionActivity"
+                android:exported="true">
+                <intent-filter>
+                    <action android:name="pe.entel.biometrico.intent.action.SCAN"/>
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </activity>
+
+            <activity
+                android:name="biometric.entel.ScanActionCryptoActivity"
+                android:exported="true">
+                <intent-filter>
+                    <action android:name="pe.entel.biometrico.intent.action.SCANC"/>
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </activity>
+
+            <activity
+                android:name="biometric.entel.ScanActionInsolbioActivity"
+                android:exported="true">
+                <intent-filter>
+                    <action android:name="pe.entel.biometrico.intent.action.SCANI"/>
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </activity>
+
+            <activity 
+                android:name="biometric.entel.JSGDActivity"
+                android:exported="false" />
+        </config-file>
+
+        <framework src="androidx.constraintlayout:constraintlayout:2.1.4" />
+        <framework src="com.google.android.material:material:1.9.0" />
+
+        <resource-file src="src/android/res/drawable/black.jpg" target="res/drawable/black.jpg" />
+        <resource-file src="src/android/res/drawable/ic_launcher_background.xml" target="res/drawable/ic_launcher_background.xml" />
+        <resource-file src="src/android/res/drawable/entel_btn_bg_orange.xml" target="res/drawable/entel_btn_bg_orange.xml" />
+        <resource-file src="src/android/res/drawable-hdpi/hamster4.png" target="res/drawable-hdpi/hamster4.png" />
+        <resource-file src="src/android/res/drawable-hdpi/ic_my_library_books.png" target="res/drawable-hdpi/ic_my_library_books.png" />
+        <resource-file src="src/android/res/drawable-hdpi/icono_entel_biometrico.png" target="res/drawable-hdpi/icono_entel_biometrico.png" />
+        <resource-file src="src/android/res/drawable-mdpi/ic_my_library_books.png" target="res/drawable-mdpi/ic_my_library_books.png" />
+        <resource-file src="src/android/res/drawable-mdpi/icono_entel_biometrico.png" target="res/drawable-mdpi/icono_entel_biometrico.png" />
+        <resource-file src="src/android/res/drawable-v24/ic_launcher_foreground.xml" target="res/drawable-v24/ic_launcher_foreground.xml" />
+        <resource-file src="src/android/res/drawable-xhdpi/icono_entel_biometrico.png" target="res/drawable-xhdpi/icono_entel_biometrico.png" />
+        <resource-file src="src/android/res/drawable-xxhdpi/icono_entel_biometrico.png" target="res/drawable-xxhdpi/icono_entel_biometrico.png" />
+        <resource-file src="src/android/res/drawable-xxxhdpi/icono_entel_biometrico.png" target="res/drawable-xxxhdpi/icono_entel_biometrico.png" />
+        <resource-file src="src/android/res/layout/activity_capture_stream.xml" target="res/layout/activity_capture_stream.xml" />
+        <resource-file src="src/android/res/layout/activity_get_list.xml" target="res/layout/activity_get_list.xml" />
+        <resource-file src="src/android/res/layout/activity_launcher.xml" target="res/layout/activity_launcher.xml" />
+        <resource-file src="src/android/res/layout/activity_main.xml" target="res/layout/activity_main.xml" />
+        <resource-file src="src/android/res/layout/activity_scan.xml" target="res/layout/activity_scan.xml" />
+        <resource-file src="src/android/res/layout/activity_secugen.xml" target="res/layout/activity_secugen.xml" />
+        <resource-file src="src/android/res/mipmap-anydpi-v26/ic_launcher_round.xml" target="res/mipmap-anydpi-v26/ic_launcher_round.xml" />
+        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_round.png" target="res/mipmap-hdpi/ic_launcher_round.png" />
+        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_round.png" target="res/mipmap-mdpi/ic_launcher_round.png" />
+        <resource-file src="src/android/res/mipmap-xhdpi/ic_launcher_round.png" target="res/mipmap-xhdpi/ic_launcher_round.png" />
+        <resource-file src="src/android/res/mipmap-xxhdpi/ic_launcher_round.png" target="res/mipmap-xxhdpi/ic_launcher_round.png" />
+        <resource-file src="src/android/res/mipmap-xxxhdpi/ic_launcher_round.png" target="res/mipmap-xxxhdpi/ic_launcher_round.png" />
+        <resource-file src="src/android/res/values/strings.xml" target="res/values/strings.xml"/>
+        <resource-file src="src/android/res/values/styles.xml" target="res/values/styles.xml"/>
+		<resource-file src="src/android/res/values/colors.xml" target="res/values/colors.xml"/>
+        <resource-file src="src/android/res/xml/device_filter.xml" target="res/xml/device_filter.xml" />
+
+
+        
+        
+
+        <framework src="src/android/dependencies.gradle" custom="true" type="gradleReference"/>
+
+        <source-file src="src/android/CaptureFingerprintActivity.java" target-dir="src/biometric/entel" />
+        <source-file src="src/android/BiometricCordova.java" target-dir="src/biometric/entel" />
+        <source-file src="src/android/ScanActionCryptoActivity.java" target-dir="src/biometric/entel" />
+        <source-file src="src/android/ScanActionInsolbioActivity.java" target-dir="src/biometric/entel" />
+        <source-file src="src/android/MainActivity.java" target-dir="src/biometric/entel" />
+        <source-file src="src/android/JSGDActivity.java" target-dir="src/biometric/entel" />
+        <source-file src="src/android/GetReaderActivity.java" target-dir="src/biometric/entel" />
+
+        <source-file src="src/android/util/Utils.java" target-dir="src/biometric/entel/util"/>
+        <source-file src="src/android/util/JSGDUtils.java" target-dir="src/biometric/entel/util" />
+        <source-file src="src/android/util/Globals.java" target-dir="src/biometric/entel/util" />
+
+
+
+        <asset src="src/android/assets/key.txt" target="assets" />
+        <asset src="src/android/assets/private.key" target="assets" />
+        <asset src="src/android/assets/public.key" target="assets" />
+        <asset src="src/android/assets/vector.txt" target="assets" />
+
+
+        <lib-file src="src/android/libs/CriptoAPI.jar" />
+        <lib-file src="src/android/libs/dpuareu.aar" />
+        <lib-file src="src/android/libs/FDxSDKProAndroid.jar" />
+        <!-- zymorpholib removed: no local AAR reference -->
+    </platform>
+</plugin>

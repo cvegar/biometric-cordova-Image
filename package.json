@@ -1,0 +1,20 @@
+{
+  "name": "biometric-entel",
+  "version": "1.0.0",
+  "description": "Biometric lector plugin 4Finger.",
+  "cordova": {
+    "id": "biometric-entel",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "plugin",
+    "biometric",
+    "fingerprint",
+    "cordova-android"
+  ],
+  "author": "Camilo Vega",
+  "license": "MIT"
+}
