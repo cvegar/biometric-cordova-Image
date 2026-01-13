@@ -109,11 +109,28 @@ public class BiometricCordova extends CordovaPlugin {
             Log.w(TAG, "No pending callback for requestCode=" + requestCode);
             return;
         }
+        //sacar log de extras
+        if (data != null && data.getExtras() != null) {
+        Log.d(TAG, "extras=" + bundleToString(data.getExtras()));
+        }
 
         if (resultCode == Activity.RESULT_OK && data != null) {
             try {
                 // ✅ Devuelve TODOS los extras como JSON (ideal para “más outputs”)
                 JSONObject resp = intentExtrasToJson(data);
+                 resp.put("huellab64", data != null ? data.getStringExtra("huellab64") : null);
+                resp.put("serialnumber", data != null ? data.getStringExtra("serialnumber") : null);
+                resp.put("fingerprint_brand", data != null ? data.getStringExtra("fingerprint_brand") : null);
+                resp.put("bioversion", data != null ? data.getStringExtra("bioversion") : null);
+
+                // ⚠️ NO imprimas el base64 completo (es enorme); imprime longitud
+                String b64 = resp.optString("huellab64", null);
+                Log.d(TAG, "Returning SUCCESS to JS: serial=" + resp.optString("serialnumber")
+                        + " brand=" + resp.optString("fingerprint_brand")
+                        + " bioversion=" + resp.optString("bioversion")
+                        + " huellab64_len=" + (b64 == null ? 0 : b64.length()));
+
+                        //hasta aqui llega log extras
                 cb.success(resp);
             } catch (Exception e) {
                 cb.error("ERROR building response: " + e.getMessage());
@@ -128,6 +145,16 @@ public class BiometricCordova extends CordovaPlugin {
             cb.error("CANCEL");
         }
     }
+    
+    private static String bundleToString(Bundle b) {
+    StringBuilder sb = new StringBuilder("{");
+    for (String key : b.keySet()) {
+        Object val = b.get(key);
+        sb.append(key).append("=").append(String.valueOf(val)).append(", ");
+    }
+    sb.append("}");
+    return sb.toString();
+}
 
     // ---------------- helpers ----------------
 

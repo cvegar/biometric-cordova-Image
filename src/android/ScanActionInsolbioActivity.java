@@ -196,6 +196,15 @@ public class ScanActionInsolbioActivity extends Activity {
                     intent.putExtra("extra",scorePADEncrypted);
                     intent.putExtra("product",data.getStringExtra("product"));
                     intent.putExtra("vendor",data.getStringExtra("vendor"));
+
+
+                    Log.d(TAG, "finish OK serial=" + serial
+                    + " brand=" + fingerprintBrand
+                    + " bioversion=" + bioversion
+                    + " huellab64_len=" + (encriptedBase64 == null ? 0 : encriptedBase64.length())
+                    + " imagenPNG=" + (imgBase64String == null ? 0 : imgBase64String.length()));    
+
+
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                     break;
