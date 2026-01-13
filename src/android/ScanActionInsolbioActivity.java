@@ -198,7 +198,7 @@ public class ScanActionInsolbioActivity extends Activity {
                     intent.putExtra("vendor",data.getStringExtra("vendor"));
 
 
-                    Log.d(TAG, "finish OK serial=" + serial
+                    Log.d(TAG, "finish OK serial=" + data.getStringExtra("serialnumber")
                     + " brand=" + fingerprintBrand
                     + " bioversion=" + bioversion
                     + " huellab64_len=" + (encriptedBase64 == null ? 0 : encriptedBase64.length())
