@@ -37,6 +37,9 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
+
 import com.outsystemsenterprise.entel.PEMayorista.R;
 //import biometric.entel.R;
 import biometric.entel.util.Globals;
@@ -421,8 +424,10 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
         Fid ISOFid = cap_result.image;
         byte[] wsqRawCompress = processImage(ISOFid.getViews()[0].getData(), ISOFid.getViews()[0].getWidth(), ISOFid.getViews()[0].getHeight());
         String wsqBase64 = Utils.formatWsqToBase64(wsqRawCompress);
+        String fingerPngB64 = getPngBase64FromFid(ISOFid, true); // true = 512x512 centrado
 
         Intent i = new Intent();
+        
         i.putExtra("m_deviceName", m_deviceName);
         if (wsqBase64 != null) {
 
@@ -451,6 +456,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
 
                     Log.i(LOG_TAG, "Used from activity_secugen - Not Saving Image");
                     Toast.makeText(getApplicationContext(), "Correcto", Toast.LENGTH_SHORT).show();
+                    i.putExtra("finger_png_b64", fingerPngB64);
                     i.putExtra("finger", finalwsq);
                     i.putExtra("minutia", minutia);
                     setResult(Activity.RESULT_OK, i);
@@ -617,4 +623,44 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
         initializeActivity();
         populateSpinner();
     }
+
+    private String getPngBase64FromFid(Fid fid, boolean centerTo512) {
+    if (fid == null || fid.getViews() == null || fid.getViews().length == 0) return null;
+
+    byte[] raw = fid.getViews()[0].getData();
+    int w = fid.getViews()[0].getWidth();
+    int h = fid.getViews()[0].getHeight();
+
+    if (raw == null || raw.length < (w * h)) return null;
+
+    // 1) RAW -> Bitmap ALPHA_8 (tu método)
+    Bitmap alpha8 = getBitmapAlpha8FromRaw(raw, w, h);
+
+    // 2) Opcional: centrar a 512x512 como tu WSQ (tu método overlay)
+    Bitmap src = centerTo512 ? overlay(alpha8) : alpha8;
+
+    // 3) ALPHA_8 -> ARGB_8888 (para que se vea correctamente como gris)
+    int width = src.getWidth();
+    int height = src.getHeight();
+
+    ByteBuffer buf = ByteBuffer.allocate(src.getByteCount());
+    src.copyPixelsToBuffer(buf);
+    byte[] a = buf.array(); // 1 byte por pixel (alpha)
+
+    int[] pixels = new int[width * height];
+    for (int i = 0; i < pixels.length; i++) {
+        int g = a[i] & 0xFF;
+        pixels[i] = 0xFF000000 | (g << 16) | (g << 8) | g;
+    }
+
+    Bitmap argb = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+    argb.setPixels(pixels, 0, width, 0, 0, width, height);
+
+    // 4) Bitmap -> PNG bytes -> Base64
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    argb.compress(Bitmap.CompressFormat.PNG, 100, baos);
+    byte[] pngBytes = baos.toByteArray();
+
+    return Base64.encodeToString(pngBytes, Base64.NO_WRAP);
+}
 }

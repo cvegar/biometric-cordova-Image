@@ -176,14 +176,17 @@ public class ScanActionInsolbioActivity extends Activity {
                 String encriptedMinutia;
                 String keyEncripted;
                 String scorePADEncrypted;
+                String imgBase64String;
                 try {
 
                     encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
+                    imgBase64String = CryptoUtil.encrypt_(data.getStringExtra("finger_png_b64"));
                     encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
                     keyEncripted= CryptoUtil.encrypt_(data.getStringExtra("finger").substring(0,10));
                     scorePADEncrypted =CryptoUtil.encrypt_(data.getStringExtra("extra"));
 
                     intent.putExtra("huellab64", encriptedBase64);
+                    intent.putExtra("finger_png_b64", imgBase64String);
                     intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
                     intent.putExtra("fingerprint_brand", fingerprintBrand);
                     intent.putExtra("bioversion", bioversion);
