@@ -181,8 +181,22 @@ public class ScanActionInsolbioActivity extends Activity {
                 Intent intent = new Intent();
                 Log.i(TAG, "LLEGA Intent" );        
 
-                CryptoUtil.loadKeys();
-                Log.i(TAG, "LLEGA loadKeys" );   
+                try {
+                    CryptoUtil.loadKeys();
+                    Log.i(TAG, "LLEGA loadKeys - OK" );
+                } catch (Exception eLoadKeys) {
+                    Log.i(TAG, "ERROR en loadKeys: " + eLoadKeys.getMessage(), eLoadKeys);
+                    intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
+                    intent.putExtra("fingerprint_brand", fingerprintBrand);
+                    intent.putExtra("bioversion", bioversion);
+                    intent.putExtra("error", "CryptoUtil.loadKeys() error: " + eLoadKeys.getMessage());
+                    intent.putExtra("product", data.getStringExtra("product"));
+                    intent.putExtra("vendor", data.getStringExtra("vendor"));
+                    intent.putExtra("debug", "LOAD_KEYS_ERROR");
+                    setResult(Activity.RESULT_CANCELED, intent);
+                    finish();
+                    break;
+                }
                 String encriptedBase64;
                 String encriptedMinutia;
                 String keyEncripted;
