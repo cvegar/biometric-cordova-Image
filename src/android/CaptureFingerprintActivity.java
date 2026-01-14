@@ -605,7 +605,9 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
         } catch (Exception e) {
             Log.i(LOG_TAG, "error during reader shutdown " + e.getMessage());
             //Utils.saveErrorInStorage("Error during reader shutdown");
-
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            m_bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] pngBytes = baos.toByteArray();
             Intent i = new Intent();
             i.putExtra("device_name", m_deviceName);
             i.putExtra("finger", finalwsq);
@@ -615,8 +617,8 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("extra",scorePAD);
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
-            Log.i(LOG_TAG, "Imagen Base64=" + fingerPngB64);
-            //i.putExtra("finger_png_b64", fingerPngB64);
+            Log.i(LOG_TAG, "Imagen Base64=" + pngBytes);
+            i.putExtra("finger_png_b64", pngBytes);
             setResult(Activity.RESULT_OK, i);
             finish();
         }
