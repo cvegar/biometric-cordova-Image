@@ -595,16 +595,14 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("extra",scorePAD);
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
-            //Log.i(LOG_TAG, "onBackPressed - finalwsq:" + (finalwsq != null ? "OK (len=" + finalwsq.length() + ")" : "NULL"));
-            //Log.i(LOG_TAG, "onBackPressed - minutia:" + (minutia != null ? "OK (len=" + minutia.length() + ")" : "NULL"));
-            //Log.i(LOG_TAG, "onBackPressed - fingerPngB64:" + (fingerPngB64 != null ? "OK (len=" + fingerPngB64.length() + ")" : "NULL"));
             Log.i(LOG_TAG, "Imagen Base64=" + fingerPngB64);
-            //i.putExtra("finger_png_b64", fingerPngB64);
+            i.putExtra("finger_png_b64", fingerPngB64);
+            Log.i(LOG_TAG, "bien el seteo Imagen Base64=" + fingerPngB64);
             setResult(Activity.RESULT_OK, i);
-            finish();
+            finish(); 
 
         } catch (Exception e) {
-            Log.i("UareUSampleJava", "error during reader shutdown");
+            Log.i(LOG_TAG, "error during reader shutdown");
             //Utils.saveErrorInStorage("Error during reader shutdown");
 
             Intent i = new Intent();
@@ -617,7 +615,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
             Log.i(LOG_TAG, "Imagen Base64=" + fingerPngB64);
-            //i.putExtra("finger_png_b64", fingerPngB64);
+            i.putExtra("finger_png_b64", fingerPngB64);
             setResult(Activity.RESULT_OK, i);
             finish();
         }
