@@ -16,6 +16,8 @@ import android.widget.Toast;
 import android.graphics.Bitmap;
 import android.util.Base64;
 
+import java.io.ByteArrayOutputStream;
+
 import com.digitalpersona.uareu.Reader;
 import com.digitalpersona.uareu.UareUException;
 import com.digitalpersona.uareu.dpfpddusbhost.DPFPDDUsbException;
@@ -234,6 +236,28 @@ public class ScanActionInsolbioActivity extends Activity {
 
 
         }
+    }
+
+    private Bitmap raw8ToGrayscaleBitmap(byte[] raw, int width, int height) {
+        if (raw == null || width <= 0 || height <= 0 || raw.length < width * height) return null;
+
+        int size = width * height;
+        int[] pixels = new int[size];
+
+        for (int i = 0; i < size; i++) {
+            int g = raw[i] & 0xFF;
+            pixels[i] = 0xFF000000 | (g << 16) | (g << 8) | g;
+        }
+
+        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        bmp.setPixels(pixels, 0, width, 0, 0, width, height);
+        return bmp;
+    }
+
+    private byte[] bitmapToPngBytes(Bitmap bmp) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
     }
 
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
