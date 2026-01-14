@@ -85,6 +85,10 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
     private int nfiqScore;
     private String fingerPngB64;
 
+    byte[] raw;
+    int w;
+    int h;
+
 
     private void initializeActivity() {
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -434,7 +438,12 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             try {
                 fmd = engine.CreateFmd(cap_result.image,Fmd.Format.ANSI_378_2004);
                 minutia = Base64.encodeToString(fmd.getData(),Base64.NO_WRAP);
-                fingerPngB64 = getPngBase64FromFid(ISOFid, true);  // true = 512x512 centrado  
+
+                  //Obtener PNG en Base64
+                raw = ISOFid.getViews()[0].getData();
+                w = ISOFid.getViews()[0].getWidth();
+                h = ISOFid.getViews()[0].getHeight();
+
                 Log.i(LOG_TAG, "minutia: "+minutia);
                 Log.i(LOG_TAG, "wsqBase64: " + wsqBase64);
 
@@ -597,9 +606,10 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("extra",scorePAD);
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
-            Log.i(LOG_TAG, "Imagen Base64=" + fingerPngB64);
             i.putExtra("fingerpngb64", fingerPngB64);
-            Log.i(LOG_TAG, "bien el seteo Imagen Base64=" + fingerPngB64);
+            i.putExtra("finger_raw", raw);   
+            i.putExtra("finger_w", w);
+            i.putExtra("finger_h", h);
             setResult(Activity.RESULT_OK, i);
             finish(); 
 
@@ -618,8 +628,9 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("extra",scorePAD);
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
-            Log.i(LOG_TAG, "Imagen Base64=" + pngBytes);
-            i.putExtra("fingerpngb64", pngBytes);
+            i.putExtra("finger_raw", raw);   
+            i.putExtra("finger_w", w);
+            i.putExtra("finger_h", h);
             setResult(Activity.RESULT_OK, i);
             finish();
         }
@@ -635,43 +646,4 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
         populateSpinner();
     }
 
-    private String getPngBase64FromFid(Fid fid, boolean centerTo512) {
-        if (fid == null || fid.getViews() == null || fid.getViews().length == 0) return null;
-
-        byte[] raw = fid.getViews()[0].getData();
-        int w = fid.getViews()[0].getWidth();
-        int h = fid.getViews()[0].getHeight();
-
-        if (raw == null || raw.length < (w * h)) return null;
-
-        // 1) RAW -> Bitmap ALPHA_8 (tu método)
-        Bitmap alpha8 = getBitmapAlpha8FromRaw(raw, w, h);
-
-        // 2) Opcional: centrar a 512x512 como tu WSQ (tu método overlay)
-        Bitmap src = centerTo512 ? overlay(alpha8) : alpha8;
-
-        // 3) ALPHA_8 -> ARGB_8888 (para que se vea correctamente como gris)
-        int width = src.getWidth();
-        int height = src.getHeight();
-
-        ByteBuffer buf = ByteBuffer.allocate(src.getByteCount());
-        src.copyPixelsToBuffer(buf);
-        byte[] a = buf.array(); // 1 byte por pixel (alpha)
-
-        int[] pixels = new int[width * height];
-        for (int i = 0; i < pixels.length; i++) {
-            int g = a[i] & 0xFF;
-            pixels[i] = 0xFF000000 | (g << 16) | (g << 8) | g;
-        }
-
-        Bitmap argb = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        argb.setPixels(pixels, 0, width, 0, 0, width, height);
-
-        // 4) Bitmap -> PNG bytes -> Base64
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        argb.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] pngBytes = baos.toByteArray();
-
-        return Base64.encodeToString(pngBytes, Base64.NO_WRAP);
-    }
 }

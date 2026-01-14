@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
 
+import java.util.Base64;
+
 import com.digitalpersona.uareu.Reader;
 import com.digitalpersona.uareu.UareUException;
 import com.digitalpersona.uareu.dpfpddusbhost.DPFPDDUsbException;
@@ -176,35 +178,33 @@ public class ScanActionInsolbioActivity extends Activity {
                 String keyEncripted;
                 String scorePADEncrypted;
                 String imgBase64String;
+                byte[] raw ;
+                int w = 0;
+                int h = 0;
+                
                 try {
+                    raw = data.getByteArrayExtra("finger_raw");
+                    w = data.getIntExtra("finger_w", 0);
+                    h = data.getIntExtra("finger_h", 0);
+                    Bitmap bmp = raw8ToGrayscaleBitmap(raw, w, h);
+                    byte[] pngBytes = bitmapToPngBytes(bmp);
+                    imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
 
                     encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
-                    //imgBase64String = CryptoUtil.encrypt_(data.getStringExtra("finger_png_b64"));
                     encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
                     keyEncripted= CryptoUtil.encrypt_(data.getStringExtra("finger").substring(0,10));
                     scorePADEncrypted =CryptoUtil.encrypt_(data.getStringExtra("extra"));
-                    Log.i(TAG, "Huella imagen: "+data.getStringExtra("fingerpngb64"));
+                    intent.putExtra("fingerpngb64", imgBase64String);
                     intent.putExtra("huellab64", encriptedBase64);
-                    Log.i(TAG, "bien huella");
-                    //intent.putExtra("finger_png_b64", imgBase64String);
                     intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
-                    Log.i(TAG, "bien serialnumber" + data.getStringExtra("serialnumber"));
                     intent.putExtra("fingerprint_brand", fingerprintBrand);
-                    Log.i(TAG, "bien fingerprint_brand" + fingerprintBrand);
                     intent.putExtra("bioversion", bioversion);
-                    Log.i(TAG, "bien bioversion" + bioversion);
                     intent.putExtra("minutia", encriptedMinutia);
-                    Log.i(TAG, "bien minutia" + encriptedMinutia);
                     intent.putExtra("error",data.getStringExtra("error") );
-                    Log.i(TAG, "bien error" + data.getStringExtra("error"));
                     intent.putExtra("key",keyEncripted);
-                    Log.i(TAG, "bien key"   + keyEncripted);
                     intent.putExtra("extra",scorePADEncrypted);
-                    Log.i(TAG, "bien huella" + scorePADEncrypted);
                     intent.putExtra("product",data.getStringExtra("product"));
-                    Log.i(TAG, "bien product"   + data.getStringExtra("product"));
                     intent.putExtra("vendor",data.getStringExtra("vendor"));
-                    Log.i(TAG, "bien vendor" + data.getStringExtra("vendor"));
 
 /*                    Log.d(TAG, "finish OK serial=" + data.getStringExtra("serialnumber")
                     Log.d(TAG, "finish OK serial=" + data.getStringExtra("serialnumber")
@@ -218,6 +218,7 @@ public class ScanActionInsolbioActivity extends Activity {
                     finish();
                     break;
                 } catch (Exception e) {
+                    intent.putExtra("fingerpngb64", imgBase64String);
                     Log.i(TAG, "CAE LOAD KEYS" + e.getMessage());
                     intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
                     intent.putExtra("fingerprint_brand", fingerprintBrand);
