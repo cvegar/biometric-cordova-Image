@@ -437,6 +437,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
                 minutia = Base64.encodeToString(fmd.getData(),Base64.NO_WRAP);
 
                 Log.i(LOG_TAG, "minutia: "+minutia);
+                Log.i(LOG_TAG, "wsqBase64: " + wsqBase64);
 
             }catch (Exception e) {
                 Log.e(LOG_TAG, "Error FMD: "+e.getMessage());
@@ -594,7 +595,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("extra",scorePAD);
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
-            Log.d(LOG_TAG, "Imagen Base64=" + fingerPngB64);
+            Log.i(LOG_TAG, "Imagen Base64=" + fingerPngB64);
             //i.putExtra("finger_png_b64", fingerPngB64);
             setResult(Activity.RESULT_OK, i);
             finish();
@@ -612,7 +613,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("extra",scorePAD);
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
-            Log.d(LOG_TAG, "Imagen Base64=" + fingerPngB64);
+            Log.i(LOG_TAG, "Imagen Base64=" + fingerPngB64);
             //i.putExtra("finger_png_b64", fingerPngB64);
             setResult(Activity.RESULT_OK, i);
             finish();

@@ -172,10 +172,10 @@ public class ScanActionInsolbioActivity extends Activity {
                 Log.i(TAG, "bien serialnumber" + data.getStringExtra("serialnumber"));
                 Log.i(TAG, "bien fingerprint_brand" + fingerprintBrand);
                 Log.i(TAG, "bien bioversion" + bioversion);
-                Log.i(TAG, "bien minutia" + encriptedMinutia);
+                Log.i(TAG, "bien minutia" + data.getStringExtra("minutia"));
                 Log.i(TAG, "bien error" + data.getStringExtra("error"));
-                Log.i(TAG, "bien key"   + keyEncripted);
-                Log.i(TAG, "bien huella" + scorePADEncrypted);
+                Log.i(TAG, "bien key"   + data.getStringExtra("finger").substring(0,10));
+                Log.i(TAG, "bien huella" + data.getStringExtra("extra"));
                 Log.i(TAG, "bien product"   + data.getStringExtra("product"));
                 Log.i(TAG, "bien vendor" + data.getStringExtra("vendor"));
                 Intent intent = new Intent();
