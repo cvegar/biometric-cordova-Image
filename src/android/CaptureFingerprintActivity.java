@@ -606,7 +606,6 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("extra",scorePAD);
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
-            i.putExtra("fingerpngb64", fingerPngB64);
             i.putExtra("finger_raw", raw);   
             i.putExtra("finger_w", w);
             i.putExtra("finger_h", h);
