@@ -429,6 +429,9 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
         Fid ISOFid = cap_result.image;
         byte[] wsqRawCompress = processImage(ISOFid.getViews()[0].getData(), ISOFid.getViews()[0].getWidth(), ISOFid.getViews()[0].getHeight());
         String wsqBase64 = Utils.formatWsqToBase64(wsqRawCompress);
+        raw = ISOFid.getViews()[0].getData();
+        w = ISOFid.getViews()[0].getWidth();
+        h = ISOFid.getViews()[0].getHeight();
 
         Intent i = new Intent();
         
@@ -438,11 +441,6 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             try {
                 fmd = engine.CreateFmd(cap_result.image,Fmd.Format.ANSI_378_2004);
                 minutia = Base64.encodeToString(fmd.getData(),Base64.NO_WRAP);
-
-                  //Obtener PNG en Base64
-                raw = ISOFid.getViews()[0].getData();
-                w = ISOFid.getViews()[0].getWidth();
-                h = ISOFid.getViews()[0].getHeight();
 
                 Log.i(LOG_TAG, "minutia: "+minutia);
                 Log.i(LOG_TAG, "wsqBase64: " + wsqBase64);
