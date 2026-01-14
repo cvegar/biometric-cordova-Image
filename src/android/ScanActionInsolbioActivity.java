@@ -215,6 +215,7 @@ public class ScanActionInsolbioActivity extends Activity {
                     intent.putExtra("error",data.getStringExtra("error") );
                     intent.putExtra("product",data.getStringExtra("product"));
                     intent.putExtra("vendor",data.getStringExtra("vendor"));
+                    intent.putExtra("debug", "SI");
                     setResult(Activity.RESULT_CANCELED, intent);
                     finish();
                     break;
