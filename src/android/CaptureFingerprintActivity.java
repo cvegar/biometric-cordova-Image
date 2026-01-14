@@ -430,8 +430,11 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
         byte[] wsqRawCompress = processImage(ISOFid.getViews()[0].getData(), ISOFid.getViews()[0].getWidth(), ISOFid.getViews()[0].getHeight());
         String wsqBase64 = Utils.formatWsqToBase64(wsqRawCompress);
         raw = ISOFid.getViews()[0].getData();
+        Log.i(LOG_TAG, "raw: " + raw);
         w = ISOFid.getViews()[0].getWidth();
+        Log.i(LOG_TAG, "W: " + w);
         h = ISOFid.getViews()[0].getHeight();
+        Log.i(LOG_TAG, "H: " + h);
 
         Intent i = new Intent();
         
@@ -607,6 +610,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("finger_raw", raw);   
             i.putExtra("finger_w", w);
             i.putExtra("finger_h", h);
+            Log.i(LOG_TAG, "setea RAW W H: SI " );
             setResult(Activity.RESULT_OK, i);
             finish(); 
 
@@ -625,6 +629,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("finger_raw", raw);   
             i.putExtra("finger_w", w);
             i.putExtra("finger_h", h);
+            Log.i(LOG_TAG, "setea RAW en error W H: SI " );
             setResult(Activity.RESULT_OK, i);
             finish();
         }

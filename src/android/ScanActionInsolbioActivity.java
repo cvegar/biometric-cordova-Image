@@ -181,7 +181,7 @@ public class ScanActionInsolbioActivity extends Activity {
                 String scorePADEncrypted;
                 String imgBase64String = "";
                 byte[] raw ;
-                int w = 0;
+                int w = 0; 
                 int h = 0;
                 
                 try {
@@ -191,6 +191,7 @@ public class ScanActionInsolbioActivity extends Activity {
                     Bitmap bmp = raw8ToGrayscaleBitmap(raw, w, h);
                     byte[] pngBytes = bitmapToPngBytes(bmp);
                     imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
+                    Log.i(TAG, "base64IMG: " + imgBase64String);
 
                     encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
                     encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
