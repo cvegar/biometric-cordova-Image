@@ -612,7 +612,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("extra",scorePAD);
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
-            Log.d(TAG, "Imagen Base64=" + fingerPngB64);
+            Log.d(LOG_TAG, "Imagen Base64=" + fingerPngB64);
             //i.putExtra("finger_png_b64", fingerPngB64);
             setResult(Activity.RESULT_OK, i);
             finish();
