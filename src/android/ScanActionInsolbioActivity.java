@@ -168,8 +168,18 @@ public class ScanActionInsolbioActivity extends Activity {
                 break;
             case 1:
                 Log.i(TAG, "ON RESULT OF SCAN");
-
+                Log.i(TAG, "bien huella");
+                Log.i(TAG, "bien serialnumber" + data.getStringExtra("serialnumber"));
+                Log.i(TAG, "bien fingerprint_brand" + fingerprintBrand);
+                Log.i(TAG, "bien bioversion" + bioversion);
+                Log.i(TAG, "bien minutia" + encriptedMinutia);
+                Log.i(TAG, "bien error" + data.getStringExtra("error"));
+                Log.i(TAG, "bien key"   + keyEncripted);
+                Log.i(TAG, "bien huella" + scorePADEncrypted);
+                Log.i(TAG, "bien product"   + data.getStringExtra("product"));
+                Log.i(TAG, "bien vendor" + data.getStringExtra("vendor"));
                 Intent intent = new Intent();
+                    
 
                 CryptoUtil.loadKeys();
                 String encriptedBase64;
