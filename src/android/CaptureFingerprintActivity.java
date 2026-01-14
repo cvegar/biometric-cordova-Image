@@ -471,7 +471,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
 
                     onBackPressed();
                 }
-            } catch (Exception e) {36
+            } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(LOG_TAG, "Ocurrió un error capturando la huella");
                 Toast.makeText(getApplicationContext(), "Ocurrió un error capturando la huella", Toast.LENGTH_SHORT).show();
