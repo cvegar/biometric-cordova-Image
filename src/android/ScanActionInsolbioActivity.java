@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
 
-import java.util.Base64;
+import android.util.Base64;
 
 import com.digitalpersona.uareu.Reader;
 import com.digitalpersona.uareu.UareUException;
