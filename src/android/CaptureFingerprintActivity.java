@@ -466,11 +466,12 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
 
                 } else {
                     finalwsq = wsqBase64;
+                    i.putExtra("finger_png_b64", fingerPngB64);
                     Toast.makeText(getApplicationContext(), "Huella capturada", Toast.LENGTH_SHORT).show();
 
                     onBackPressed();
                 }
-            } catch (Exception e) {
+            } catch (Exception e) {36
                 e.printStackTrace();
                 Log.e(LOG_TAG, "Ocurrió un error capturando la huella");
                 Toast.makeText(getApplicationContext(), "Ocurrió un error capturando la huella", Toast.LENGTH_SHORT).show();
