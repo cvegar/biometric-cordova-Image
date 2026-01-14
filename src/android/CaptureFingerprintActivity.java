@@ -585,7 +585,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
 
             }
             m_reader.Close();
-                
+
             Intent i = new Intent();
             i.putExtra("device_name", m_deviceName);
             i.putExtra("finger", finalwsq);
@@ -595,11 +595,11 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("extra",scorePAD);
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
-            Log.i(LOG_TAG, "onBackPressed - finalwsq:" + (finalwsq != null ? "OK (len=" + finalwsq.length() + ")" : "NULL"));
-            Log.i(LOG_TAG, "onBackPressed - minutia:" + (minutia != null ? "OK (len=" + minutia.length() + ")" : "NULL"));
-            Log.i(LOG_TAG, "onBackPressed - fingerPngB64:" + (fingerPngB64 != null ? "OK (len=" + fingerPngB64.length() + ")" : "NULL"));
+            //Log.i(LOG_TAG, "onBackPressed - finalwsq:" + (finalwsq != null ? "OK (len=" + finalwsq.length() + ")" : "NULL"));
+            //Log.i(LOG_TAG, "onBackPressed - minutia:" + (minutia != null ? "OK (len=" + minutia.length() + ")" : "NULL"));
+            //Log.i(LOG_TAG, "onBackPressed - fingerPngB64:" + (fingerPngB64 != null ? "OK (len=" + fingerPngB64.length() + ")" : "NULL"));
             Log.i(LOG_TAG, "Imagen Base64=" + fingerPngB64);
-            i.putExtra("finger_png_b64", fingerPngB64);
+            //i.putExtra("finger_png_b64", fingerPngB64);
             setResult(Activity.RESULT_OK, i);
             finish();
 
@@ -617,7 +617,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
             Log.i(LOG_TAG, "Imagen Base64=" + fingerPngB64);
-            i.putExtra("finger_png_b64", fingerPngB64);
+            //i.putExtra("finger_png_b64", fingerPngB64);
             setResult(Activity.RESULT_OK, i);
             finish();
         }
