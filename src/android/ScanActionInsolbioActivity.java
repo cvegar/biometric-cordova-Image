@@ -186,7 +186,7 @@ public class ScanActionInsolbioActivity extends Activity {
                     scorePADEncrypted =CryptoUtil.encrypt_(data.getStringExtra("extra"));
 
                     intent.putExtra("huellab64", encriptedBase64);
-                    intent.putExtra("finger_png_b64", imgBase64String);
+                    //intent.putExtra("finger_png_b64", imgBase64String);
                     intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
                     intent.putExtra("fingerprint_brand", fingerprintBrand);
                     intent.putExtra("bioversion", bioversion);
