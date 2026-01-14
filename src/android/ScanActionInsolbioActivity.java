@@ -179,7 +179,7 @@ public class ScanActionInsolbioActivity extends Activity {
                 String encriptedMinutia;
                 String keyEncripted;
                 String scorePADEncrypted;
-                String imgBase64String;
+                String imgBase64String = "";
                 byte[] raw ;
                 int w = 0;
                 int h = 0;
