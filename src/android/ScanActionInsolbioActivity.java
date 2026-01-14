@@ -167,45 +167,19 @@ public class ScanActionInsolbioActivity extends Activity {
 
                 break;
             case 1:
-                Log.i(TAG, "ON RESULT OF SCAN");
-                Log.i(TAG, "bien huella");
-                Log.i(TAG, "bien serialnumber" + data.getStringExtra("serialnumber"));
-                Log.i(TAG, "bien fingerprint_brand" + fingerprintBrand);
-                Log.i(TAG, "bien bioversion" + bioversion);
-                Log.i(TAG, "bien minutia" + data.getStringExtra("minutia"));
-                Log.i(TAG, "bien error" + data.getStringExtra("error"));
-                Log.i(TAG, "bien key"   + data.getStringExtra("finger").substring(0,10));
-                Log.i(TAG, "bien huella" + data.getStringExtra("extra"));
-                Log.i(TAG, "bien product"   + data.getStringExtra("product"));
-                Log.i(TAG, "bien vendor" + data.getStringExtra("vendor"));
+             
                 Intent intent = new Intent();
-                Log.i(TAG, "LLEGA Intent" );        
 
-                try {
-                    CryptoUtil.loadKeys();
-                    Log.i(TAG, "LLEGA loadKeys - OK" );
-                } catch (Exception eLoadKeys) {
-                    Log.i(TAG, "ERROR en loadKeys: " + eLoadKeys.getMessage(), eLoadKeys);
-                    intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
-                    intent.putExtra("fingerprint_brand", fingerprintBrand);
-                    intent.putExtra("bioversion", bioversion);
-                    intent.putExtra("error", "CryptoUtil.loadKeys() error: " + eLoadKeys.getMessage());
-                    intent.putExtra("product", data.getStringExtra("product"));
-                    intent.putExtra("vendor", data.getStringExtra("vendor"));
-                    intent.putExtra("debug", "LOAD_KEYS_ERROR");
-                    setResult(Activity.RESULT_CANCELED, intent);
-                    finish();
-                    break;
-                }
+                CryptoUtil.loadKeys();
                 String encriptedBase64;
                 String encriptedMinutia;
                 String keyEncripted;
                 String scorePADEncrypted;
                 String imgBase64String;
                 try {
-
+                    Log.i(TAG, "bien huella");    
                     encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
-                    imgBase64String = CryptoUtil.encrypt_(data.getStringExtra("finger_png_b64"));
+                    //imgBase64String = CryptoUtil.encrypt_(data.getStringExtra("finger_png_b64"));
                     encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
                     keyEncripted= CryptoUtil.encrypt_(data.getStringExtra("finger").substring(0,10));
                     scorePADEncrypted =CryptoUtil.encrypt_(data.getStringExtra("extra"));
@@ -244,7 +218,7 @@ public class ScanActionInsolbioActivity extends Activity {
                     finish();
                     break;
                 } catch (Exception e) {
-                    Log.i(TAG, "CAE LOAD KEYS" );
+                    Log.i(TAG, "CAE LOAD KEYS" + e.getMessage());
                     intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
                     intent.putExtra("fingerprint_brand", fingerprintBrand);
                     intent.putExtra("bioversion", bioversion);
