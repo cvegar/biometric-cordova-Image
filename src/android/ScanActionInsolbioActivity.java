@@ -186,16 +186,26 @@ public class ScanActionInsolbioActivity extends Activity {
                     scorePADEncrypted =CryptoUtil.encrypt_(data.getStringExtra("extra"));
 
                     intent.putExtra("huellab64", encriptedBase64);
+                    Log.d(TAG, "bien huella");
                     //intent.putExtra("finger_png_b64", imgBase64String);
                     intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
+                    Log.d(TAG, "bien serialnumber" + data.getStringExtra("serialnumber"));
                     intent.putExtra("fingerprint_brand", fingerprintBrand);
+                    Log.d(TAG, "bien fingerprint_brand" + fingerprintBrand);
                     intent.putExtra("bioversion", bioversion);
+                    Log.d(TAG, "bien bioversion" + bioversion);
                     intent.putExtra("minutia", encriptedMinutia);
+                    Log.d(TAG, "bien minutia" + encriptedMinutia);
                     intent.putExtra("error",data.getStringExtra("error") );
+                    Log.d(TAG, "bien error" + data.getStringExtra("error"));
                     intent.putExtra("key",keyEncripted);
+                    Log.d(TAG, "bien key"   + keyEncripted);
                     intent.putExtra("extra",scorePADEncrypted);
+                    Log.d(TAG, "bien huella" + scorePADEncrypted);
                     intent.putExtra("product",data.getStringExtra("product"));
+                    Log.d(TAG, "bien product"   + data.getStringExtra("product"));
                     intent.putExtra("vendor",data.getStringExtra("vendor"));
+                    Log.d(TAG, "bien vendor" + data.getStringExtra("vendor"));
 
 /*                    Log.d(TAG, "finish OK serial=" + data.getStringExtra("serialnumber")
                     Log.d(TAG, "finish OK serial=" + data.getStringExtra("serialnumber")
