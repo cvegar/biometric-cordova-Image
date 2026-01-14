@@ -179,9 +179,10 @@ public class ScanActionInsolbioActivity extends Activity {
                 Log.i(TAG, "bien product"   + data.getStringExtra("product"));
                 Log.i(TAG, "bien vendor" + data.getStringExtra("vendor"));
                 Intent intent = new Intent();
-                    
+                Log.i(TAG, "LLEGA Intent" );        
 
                 CryptoUtil.loadKeys();
+                Log.i(TAG, "LLEGA loadKeys" );   
                 String encriptedBase64;
                 String encriptedMinutia;
                 String keyEncripted;
@@ -229,6 +230,7 @@ public class ScanActionInsolbioActivity extends Activity {
                     finish();
                     break;
                 } catch (Exception e) {
+                    Log.i(TAG, "CAE LOAD KEYS" );
                     intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
                     intent.putExtra("fingerprint_brand", fingerprintBrand);
                     intent.putExtra("bioversion", bioversion);
