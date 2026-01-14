@@ -183,7 +183,7 @@ public class ScanActionInsolbioActivity extends Activity {
                     encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
                     keyEncripted= CryptoUtil.encrypt_(data.getStringExtra("finger").substring(0,10));
                     scorePADEncrypted =CryptoUtil.encrypt_(data.getStringExtra("extra"));
-                    Log.i(TAG, "Huella imagen: "+data.getStringExtra("finger_png_b64"));
+                    Log.i(TAG, "Huella imagen: "+data.getStringExtra("fingerpngb64"));
                     intent.putExtra("huellab64", encriptedBase64);
                     Log.i(TAG, "bien huella");
                     //intent.putExtra("finger_png_b64", imgBase64String);

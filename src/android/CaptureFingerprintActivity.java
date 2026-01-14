@@ -425,7 +425,6 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
         Fid ISOFid = cap_result.image;
         byte[] wsqRawCompress = processImage(ISOFid.getViews()[0].getData(), ISOFid.getViews()[0].getWidth(), ISOFid.getViews()[0].getHeight());
         String wsqBase64 = Utils.formatWsqToBase64(wsqRawCompress);
-        fingerPngB64 = getPngBase64FromFid(ISOFid, true); // true = 512x512 centrado
 
         Intent i = new Intent();
         
@@ -435,7 +434,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             try {
                 fmd = engine.CreateFmd(cap_result.image,Fmd.Format.ANSI_378_2004);
                 minutia = Base64.encodeToString(fmd.getData(),Base64.NO_WRAP);
-
+                fingerPngB64 = getPngBase64FromFid(ISOFid, true);  // true = 512x512 centrado  
                 Log.i(LOG_TAG, "minutia: "+minutia);
                 Log.i(LOG_TAG, "wsqBase64: " + wsqBase64);
 
@@ -476,6 +475,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
                 Log.e(LOG_TAG, "Ocurrió un error capturando la huella");
                 Toast.makeText(getApplicationContext(), "Ocurrió un error capturando la huella", Toast.LENGTH_SHORT).show();
                 i.putExtra("finger", finalwsq);
+                i.putExtra("finger_png_b64", fingerPngB64);
                 i.putExtra("minutia", minutia);
                 setResult(Activity.RESULT_CANCELED, i);
                 finish();
@@ -484,6 +484,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
 
             Log.i(LOG_TAG, "Ocurrió un error al transformar la huella");
             i.putExtra("finger", finalwsq);
+            i.putExtra("finger_png_b64", fingerPngB64);
             i.putExtra("minutia", minutia);
             setResult(Activity.RESULT_CANCELED, i);
             finish();
@@ -597,7 +598,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
             Log.i(LOG_TAG, "Imagen Base64=" + fingerPngB64);
-            i.putExtra("finger_png_b64", fingerPngB64);
+            i.putExtra("fingerpngb64", fingerPngB64);
             Log.i(LOG_TAG, "bien el seteo Imagen Base64=" + fingerPngB64);
             setResult(Activity.RESULT_OK, i);
             finish(); 
@@ -618,7 +619,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
             Log.i(LOG_TAG, "Imagen Base64=" + pngBytes);
-            i.putExtra("finger_png_b64", pngBytes);
+            i.putExtra("fingerpngb64", pngBytes);
             setResult(Activity.RESULT_OK, i);
             finish();
         }
