@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
-
+import android.graphics.Bitmap;
 import android.util.Base64;
 
 import com.digitalpersona.uareu.Reader;
