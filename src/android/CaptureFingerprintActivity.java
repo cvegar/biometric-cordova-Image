@@ -74,7 +74,6 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
     private boolean bFirstTime = true;
     String finalwsq;
     String serialnumber;
-    private boolean isFinishing = false;  // Bandera para evitar double finish
 
     private Fmd fmd;
     private Engine engine;
@@ -463,19 +462,13 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
                     i.putExtra("finger", finalwsq);
                     i.putExtra("minutia", minutia);
                     setResult(Activity.RESULT_OK, i);
-                    if (!isFinishing) {
-                        isFinishing = true;
-                        finish();
-                    }
+                    finish();
 
                 } else {
                     finalwsq = wsqBase64;
                     Toast.makeText(getApplicationContext(), "Huella capturada", Toast.LENGTH_SHORT).show();
 
-                    if (!isFinishing) {
-                        isFinishing = true;
-                        onBackPressed();
-                    }
+                    onBackPressed();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -484,10 +477,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
                 i.putExtra("finger", finalwsq);
                 i.putExtra("minutia", minutia);
                 setResult(Activity.RESULT_CANCELED, i);
-                if (!isFinishing) {
-                    isFinishing = true;
-                    finish();
-                }
+                finish();
             }
         } else {
 
@@ -495,10 +485,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("finger", finalwsq);
             i.putExtra("minutia", minutia);
             setResult(Activity.RESULT_CANCELED, i);
-            if (!isFinishing) {
-                isFinishing = true;
-                finish();
-            }
+            finish();
 
         }
     }
@@ -590,12 +577,6 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
 
     @Override
     public void onBackPressed() {
-        if (isFinishing) {
-            Log.i(LOG_TAG, "Ya estamos finalizando, evitando double finish");
-            return;
-        }
-        isFinishing = true;
-
         try {
             m_reset = true;
             try {
@@ -621,7 +602,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             finish(); 
 
         } catch (Exception e) {
-            Log.i(LOG_TAG, "error during reader shutdown");
+            Log.i(LOG_TAG, "error during reader shutdown " + e.getMessage());
             //Utils.saveErrorInStorage("Error during reader shutdown");
 
             Intent i = new Intent();
@@ -634,7 +615,7 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             i.putExtra("product",productName);
             i.putExtra("vendor",vendorName);
             Log.i(LOG_TAG, "Imagen Base64=" + fingerPngB64);
-            i.putExtra("finger_png_b64", fingerPngB64);
+            //i.putExtra("finger_png_b64", fingerPngB64);
             setResult(Activity.RESULT_OK, i);
             finish();
         }
