@@ -177,13 +177,13 @@ public class ScanActionInsolbioActivity extends Activity {
                 String scorePADEncrypted;
                 String imgBase64String;
                 try {
-                    Log.i(TAG, "bien huella");    
+
                     encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
                     //imgBase64String = CryptoUtil.encrypt_(data.getStringExtra("finger_png_b64"));
                     encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
                     keyEncripted= CryptoUtil.encrypt_(data.getStringExtra("finger").substring(0,10));
                     scorePADEncrypted =CryptoUtil.encrypt_(data.getStringExtra("extra"));
-
+                    Log.i(TAG, "Huella imagen: "+data.getStringExtra("finger_png_b64"));
                     intent.putExtra("huellab64", encriptedBase64);
                     Log.i(TAG, "bien huella");
                     //intent.putExtra("finger_png_b64", imgBase64String);
