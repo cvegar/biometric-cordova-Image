@@ -70,7 +70,7 @@ public class BiometricCordova extends CordovaPlugin {
             intent.putExtra("hleft",  normalizeToBracketedString(hleft));
         }
 
-        Log.d(TAG, "Launching ScanActionCryptoActivity. op=" + op);
+        Log.i(TAG, "Launching ScanActionCryptoActivity. op=" + op);
         cordova.startActivityForResult(this, intent, REQ_SCAN_CRYPTO);
         return true;
     }
@@ -97,7 +97,7 @@ public class BiometricCordova extends CordovaPlugin {
         // Si quieres pasar más cosas opcionales, puedes hacerlo aquí también
         // intent.putExtra("op", options.optBoolean("op", false));
 
-        Log.d(TAG, "Launching ScanActionInsolbioActivity with hright=" + hright + ", hleft=" + hleft + ", flagff=" + flagFakeFinger);
+        Log.i(TAG, "Launching ScanActionInsolbioActivity with hright=" + hright + ", hleft=" + hleft + ", flagff=" + flagFakeFinger);
         cordova.startActivityForResult(this, intent, REQ_SCAN_INSOLBIO);
         return true;
     }
@@ -106,12 +106,12 @@ public class BiometricCordova extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         CallbackContext cb = pendingCallbacks.remove(requestCode);
         if (cb == null) {
-            Log.w(TAG, "No pending callback for requestCode=" + requestCode);
+            Log.i(TAG, "No pending callback for requestCode=" + requestCode);
             return;
         }
         //sacar log de extras
         if (data != null && data.getExtras() != null) {
-        Log.d(TAG, "extras=" + bundleToString(data.getExtras()));
+        Log.i(TAG, "extras=" + bundleToString(data.getExtras()));
         }
 
         if (resultCode == Activity.RESULT_OK && data != null) {
@@ -122,10 +122,11 @@ public class BiometricCordova extends CordovaPlugin {
                 resp.put("serialnumber", data != null ? data.getStringExtra("serialnumber") : null);
                 resp.put("fingerprint_brand", data != null ? data.getStringExtra("fingerprint_brand") : null);
                 resp.put("bioversion", data != null ? data.getStringExtra("bioversion") : null);
+                resp.put("fingerpngb64", data != null ? data.getStringExtra("fingerpngb64") : null);
 
                 // ⚠️ NO imprimas el base64 completo (es enorme); imprime longitud
                 String b64 = resp.optString("huellab64", null);
-                Log.d(TAG, "Returning SUCCESS to JS: serial=" + resp.optString("serialnumber")
+                Log.i(TAG, "Returning SUCCESS to JS: serial=" + resp.optString("serialnumber")
                         + " brand=" + resp.optString("fingerprint_brand")
                         + " bioversion=" + resp.optString("bioversion")
                         + " huellab64_len=" + (b64 == null ? 0 : b64.length()));
