@@ -125,11 +125,11 @@ public class BiometricCordova extends CordovaPlugin {
                 //resp.put("fingerpngb64", data != null ? data.getStringExtra("fingerpngb64") : null);
 
                 // ⚠️ NO imprimas el base64 completo (es enorme); imprime longitud
-                //String b64 = resp.optString("huellab64", null);
-                //Log.i(TAG, "Returning SUCCESS to JS: serial=" + resp.optString("serialnumber")
-                      //  + " brand=" + resp.optString("fingerprint_brand")
-                  //      + " bioversion=" + resp.optString("bioversion")
-                    //    + " huellab64_len=" + (b64 == null ? 0 : b64.length()));
+                String b64 = resp.optString("huellab64", null);
+                Log.i(TAG, "Returning SUCCESS to JS: serial=" + resp.optString("serialnumber")
+                        + " brand=" + resp.optString("fingerprint_brand")
+                        + " bioversion=" + resp.optString("bioversion")
+                        + " huellab64_len=" + (b64 == null ? 0 : b64.length()));
 
                         //hasta aqui llega log extras
                 cb.success(resp);
