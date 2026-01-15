@@ -193,36 +193,25 @@ public class ScanActionInsolbioActivity extends Activity {
                     imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
                     Log.i(TAG, "base64IMG: " + imgBase64String);
 
-                    encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
-                    Log.i(TAG, "base64IMG: 1" );
-                    encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
-                    Log.i(TAG, "base64IMG: 2" );
-                    keyEncripted= CryptoUtil.encrypt_(data.getStringExtra("finger").substring(0,10));
-                    Log.i(TAG, "base64IMG: 3" );
-                    scorePADEncrypted =CryptoUtil.encrypt_(data.getStringExtra("extra"));
-                    Log.i(TAG, "base64IMG: 4" );
+                    intent.putExtra("finger_raw", raw);
+                    intent.putExtra("finger_w", w);
+                    intent.putExtra("finger_h", h);
+
                     intent.putExtra("fingerpngb64", imgBase64String);
-                    Log.i(TAG, "base64IMG: 5" );
+                    encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
+                    encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
+                    keyEncripted= CryptoUtil.encrypt_(data.getStringExtra("finger").substring(0,10));
+                    scorePADEncrypted =CryptoUtil.encrypt_(data.getStringExtra("extra"));
                     intent.putExtra("huellab64", encriptedBase64);
-                    Log.i(TAG, "base64IMG: 6" );
                     intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
-                    Log.i(TAG, "base64IMG: 7" );
                     intent.putExtra("fingerprint_brand", fingerprintBrand);
-                    Log.i(TAG, "base64IMG: 8" );
                     intent.putExtra("bioversion", bioversion);
-                    Log.i(TAG, "base64IMG: 9" );
                     intent.putExtra("minutia", encriptedMinutia);
-                    Log.i(TAG, "base64IMG: 10" );
                     intent.putExtra("error",data.getStringExtra("error") );
-                    Log.i(TAG, "base64IMG: 11" );
                     intent.putExtra("key",keyEncripted);
-                    Log.i(TAG, "base64IMG: 12" );
                     intent.putExtra("extra",scorePADEncrypted);
-                    Log.i(TAG, "base64IMG: 13" );
                     intent.putExtra("product",data.getStringExtra("product"));
-                    Log.i(TAG, "base64IMG: 14" );
                     intent.putExtra("vendor",data.getStringExtra("vendor"));
-                    Log.i(TAG, "base64IMG: 15" );
 
 /*                    Log.d(TAG, "finish OK serial=" + data.getStringExtra("serialnumber")
                     Log.d(TAG, "finish OK serial=" + data.getStringExtra("serialnumber")
@@ -233,9 +222,7 @@ public class ScanActionInsolbioActivity extends Activity {
 */
 
                     setResult(Activity.RESULT_OK, intent);
-                    Log.i(TAG, "base64IMG: 16" );
                     finish();
-                    Log.i(TAG, "base64IMG: 17" );
                     break;
                 } catch (Exception e) {
                     intent.putExtra("fingerpngb64", imgBase64String);

@@ -137,11 +137,11 @@ public class BiometricCordova extends CordovaPlugin {
                 Log.i(TAG, "base64IMG: " + imgBase64String);
                 // ✅ Devuelve TODOS los extras como JSON (ideal para “más outputs”)
                 JSONObject resp = intentExtrasToJson(data);
-                resp.put("fingerpngb64", imgBase64String);
-                // resp.put("huellab64", data != null ? data.getStringExtra("huellab64") : null);
-                //resp.put("serialnumber", data != null ? data.getStringExtra("serialnumber") : null);
-                //resp.put("fingerprint_brand", data != null ? data.getStringExtra("fingerprint_brand") : null);
-                //resp.put("bioversion", data != null ? data.getStringExtra("bioversion") : null);
+                //resp.put("fingerpngb64", imgBase64String);
+                resp.put("huellab64", data != null ? data.getStringExtra("huellab64") : null);
+                resp.put("serialnumber", data != null ? data.getStringExtra("serialnumber") : null);
+                resp.put("fingerprint_brand", data != null ? data.getStringExtra("fingerprint_brand") : null);
+                resp.put("bioversion", data != null ? data.getStringExtra("bioversion") : null);
 
                         //hasta aqui llega log extras
                 cb.success(resp);
