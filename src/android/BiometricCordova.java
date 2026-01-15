@@ -126,15 +126,14 @@ public class BiometricCordova extends CordovaPlugin {
         if (resultCode == Activity.RESULT_OK && data != null) {
             try {
 
-                w = data.getStringExtra("finger_w");
-                raw = data.getStringExtra("finger_raw");
-                h = data.getStringExtra("finger_h");
+                raw = data.getByteArrayExtra("finger_raw");
+                w = data.getIntExtra("finger_w", 0);
+                h = data.getIntExtra("finger_h", 0);
 
                 CryptoUtil.loadKeys();
                 Bitmap bmp = raw8ToGrayscaleBitmap(raw, w, h);
                 byte[] pngBytes = bitmapToPngBytes(bmp);
                 imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
-                Log.i(TAG, "base64IMG: " + imgBase64String);
 
 
 
