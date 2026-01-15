@@ -233,7 +233,9 @@ public class ScanActionInsolbioActivity extends Activity {
 */
 
                     setResult(Activity.RESULT_OK, intent);
+                    Log.i(TAG, "base64IMG: 16" );
                     finish();
+                    Log.i(TAG, "base64IMG: 17" );
                     break;
                 } catch (Exception e) {
                     intent.putExtra("fingerpngb64", imgBase64String);
