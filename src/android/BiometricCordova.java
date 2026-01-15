@@ -11,10 +11,14 @@ import java.util.Map;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
+import android.graphics.Bitmap;
+import android.util.Base64;
 
+import java.io.ByteArrayOutputStream;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.rsa.CryptoUtil;
 
 import biometric.entel.ScanActionCryptoActivity;
 import biometric.entel.ScanActionInsolbioActivity;
@@ -104,6 +108,11 @@ public class BiometricCordova extends CordovaPlugin {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        byte[] raw ;
+        int w = 0; 
+        int h = 0;
+        String imgBase64String;
         CallbackContext cb = pendingCallbacks.remove(requestCode);
         if (cb == null) {
             Log.i(TAG, "No pending callback for requestCode=" + requestCode);
@@ -116,22 +125,35 @@ public class BiometricCordova extends CordovaPlugin {
 
         if (resultCode == Activity.RESULT_OK && data != null) {
             try {
+
+                w = data.getStringExtra("finger_w");
+                raw = data.getStringExtra("finger_raw");
+                h = data.getStringExtra("finger_h");
+
+                CryptoUtil.loadKeys();
+                Bitmap bmp = raw8ToGrayscaleBitmap(raw, w, h);
+                byte[] pngBytes = bitmapToPngBytes(bmp);
+                imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
+                Log.i(TAG, "base64IMG: " + imgBase64String);
+
+
+
                 // ✅ Devuelve TODOS los extras como JSON (ideal para “más outputs”)
                 JSONObject resp = intentExtrasToJson(data);
-                 resp.put("huellab64", data != null ? data.getStringExtra("huellab64") : null);
+                resp.put("huellab64", data != null ? data.getStringExtra("huellab64") : null);
                 resp.put("serialnumber", data != null ? data.getStringExtra("serialnumber") : null);
                 resp.put("fingerprint_brand", data != null ? data.getStringExtra("fingerprint_brand") : null);
                 resp.put("bioversion", data != null ? data.getStringExtra("bioversion") : null);
-                resp.put("fingerpngb64", data != null ? data.getStringExtra("fingerpngb64") : null);
+                resp.put("fingerpngb64", imgBase64String);
 
                 // ⚠️ NO imprimas el base64 completo (es enorme); imprime longitud
-                String b64 = resp.optString("huellab64", null);
+            /*String b64 = resp.optString("huellab64", null);
                 Log.i(TAG, "Returning SUCCESS to JS: serial=" + resp.optString("serialnumber")
                         + " brand=" + resp.optString("fingerprint_brand")
                         + " bioversion=" + resp.optString("bioversion")
                         + " huellab64_len=" + (b64 == null ? 0 : b64.length()));
 
-                        //hasta aqui llega log extras
+                        //hasta aqui llega log extras*/
                 cb.success(resp);
             } catch (Exception e) {
                 cb.error("ERROR building response: " + e.getMessage());
@@ -179,6 +201,28 @@ public class BiometricCordova extends CordovaPlugin {
             if (!isNullOrEmpty(v)) return v;
         }
         return null;
+    }
+
+    private Bitmap raw8ToGrayscaleBitmap(byte[] raw, int width, int height) {
+        if (raw == null || width <= 0 || height <= 0 || raw.length < width * height) return null;
+
+        int size = width * height;
+        int[] pixels = new int[size];
+
+        for (int i = 0; i < size; i++) {
+            int g = raw[i] & 0xFF;
+            pixels[i] = 0xFF000000 | (g << 16) | (g << 8) | g;
+        }
+
+        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        bmp.setPixels(pixels, 0, width, 0, 0, width, height);
+        return bmp;
+    }
+
+    private byte[] bitmapToPngBytes(Bitmap bmp) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
     }
 
     private static JSONObject intentExtrasToJson(Intent data) throws JSONException {
