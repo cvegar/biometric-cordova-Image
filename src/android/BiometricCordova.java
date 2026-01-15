@@ -112,7 +112,7 @@ public class BiometricCordova extends CordovaPlugin {
         byte[] raw ;
         int w = 0; 
         int h = 0;
-        String imgBase64String;
+        String imgBase64String = "";
         
         CallbackContext cb = pendingCallbacks.remove(requestCode);
         if (cb == null) {
@@ -126,9 +126,9 @@ public class BiometricCordova extends CordovaPlugin {
 
         if (resultCode == Activity.RESULT_OK && data != null) {
             try {
-                w = data.getStringExtra("finger_w");
-                raw = data.getStringExtra("finger_raw");
-                h = data.getStringExtra("finger_h");
+                raw = data.getByteArrayExtra("finger_raw");
+                w = data.getIntExtra("finger_w", 0);
+                h = data.getIntExtra("finger_h", 0);
 
                 CryptoUtil.loadKeys();
                 Bitmap bmp = raw8ToGrayscaleBitmap(raw, w, h);
