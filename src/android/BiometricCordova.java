@@ -212,7 +212,7 @@ public class BiometricCordova extends CordovaPlugin {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
         return baos.toByteArray();
-
+    }
 
     private static JSONObject intentExtrasToJson(Intent data) throws JSONException {
         JSONObject resp = new JSONObject();
