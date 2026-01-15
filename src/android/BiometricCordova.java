@@ -109,10 +109,10 @@ public class BiometricCordova extends CordovaPlugin {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        byte[] raw ;
-        int w = 0; 
-        int h = 0;
-        String imgBase64String;
+        //byte[] raw ;
+        //int w = 0; 
+        //int h = 0;
+        //String imgBase64String;
         CallbackContext cb = pendingCallbacks.remove(requestCode);
         if (cb == null) {
             Log.i(TAG, "No pending callback for requestCode=" + requestCode);
@@ -126,14 +126,14 @@ public class BiometricCordova extends CordovaPlugin {
         if (resultCode == Activity.RESULT_OK && data != null) {
             try {
 
-                raw = data.getByteArrayExtra("finger_raw");
-                w = data.getIntExtra("finger_w", 0);
-                h = data.getIntExtra("finger_h", 0);
+                //raw = data.getByteArrayExtra("finger_raw");
+                //w = data.getIntExtra("finger_w", 0);
+                //h = data.getIntExtra("finger_h", 0);
 
-                CryptoUtil.loadKeys();
-                Bitmap bmp = raw8ToGrayscaleBitmap(raw, w, h);
-                byte[] pngBytes = bitmapToPngBytes(bmp);
-                imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
+                //CryptoUtil.loadKeys();
+                //Bitmap bmp = raw8ToGrayscaleBitmap(raw, w, h);
+                //byte[] pngBytes = bitmapToPngBytes(bmp);
+                //imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
 
 
 
@@ -143,7 +143,7 @@ public class BiometricCordova extends CordovaPlugin {
                 resp.put("serialnumber", data != null ? data.getStringExtra("serialnumber") : null);
                 resp.put("fingerprint_brand", data != null ? data.getStringExtra("fingerprint_brand") : null);
                 resp.put("bioversion", data != null ? data.getStringExtra("bioversion") : null);
-                resp.put("fingerpngb64", imgBase64String);
+                //resp.put("fingerpngb64", imgBase64String);
 
                 // ⚠️ NO imprimas el base64 completo (es enorme); imprime longitud
             /*String b64 = resp.optString("huellab64", null);

@@ -188,15 +188,17 @@ public class ScanActionInsolbioActivity extends Activity {
                     raw = data.getByteArrayExtra("finger_raw");
                     w = data.getIntExtra("finger_w", 0);
                     h = data.getIntExtra("finger_h", 0);
+                    Bitmap bmp = raw8ToGrayscaleBitmap(raw, w, h);
+                    byte[] pngBytes = bitmapToPngBytes(bmp);
+                    imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
+                    Log.i(TAG, "base64IMG: " + imgBase64String);
 
                     encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
                     encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
                     keyEncripted= CryptoUtil.encrypt_(data.getStringExtra("finger").substring(0,10));
                     scorePADEncrypted =CryptoUtil.encrypt_(data.getStringExtra("extra"));
-                    intent.putExtra("finger_raw", raw);
-                    intent.putExtra("finger_w", w);
-                    intent.putExtra("finger_h", h);
-                    //intent.putExtra("fingerpngb64", imgBase64String);
+
+                    intent.putExtra("fingerpngb64", imgBase64String);
                     intent.putExtra("huellab64", encriptedBase64);
                     intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
                     intent.putExtra("fingerprint_brand", fingerprintBrand);
