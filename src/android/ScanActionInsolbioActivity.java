@@ -194,8 +194,8 @@ public class ScanActionInsolbioActivity extends Activity {
                     // ejemplo: preview 256x256
                     String pngPreviewB64 = raw8ToResizedPngBase64(raw, w, h, 256, 256);
 
-                    Log.i(LOG_TAG, "raw_len=" + (raw == null ? 0 : raw.length) + " w=" + w + " h=" + h);
-                    Log.i(LOG_TAG, "pngPreviewB64_len=" + (pngPreviewB64 == null ? 0 : pngPreviewB64.length()));
+                    Log.i(TAG, "raw_len=" + (raw == null ? 0 : raw.length) + " w=" + w + " h=" + h);
+                    Log.i(TAG, "pngPreviewB64_len=" + (pngPreviewB64 == null ? 0 : pngPreviewB64.length()));
 
                     //imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
                     Log.i(TAG, "base64IMG: " + imgBase64String);
