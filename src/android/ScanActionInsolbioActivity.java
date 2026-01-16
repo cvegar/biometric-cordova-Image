@@ -190,11 +190,11 @@ public class ScanActionInsolbioActivity extends Activity {
                     h = data.getIntExtra("finger_h", 0);
                     Bitmap bmp = raw8ToGrayscaleBitmap(raw, w, h);
                     byte[] pngBytes = bitmapToPngBytes(bmp);
-                    imgBase64String = Base64.encodeToString(pngBytes, Base64.NO_WRAP);
+                    imgBase64String = Base64.encodeToString(pngBytes    , Base64.NO_WRAP);
                     //imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
                     Log.i(TAG, "base64IMG: " + imgBase64String);
 
-                    intent.putExtra("fingerpngb64", imgBase64String);
+                    //intent.putExtra("fingerpngb64", imgBase64String);
                     encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
                     encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
                     keyEncripted= CryptoUtil.encrypt_(data.getStringExtra("finger").substring(0,10));
