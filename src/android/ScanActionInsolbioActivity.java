@@ -15,6 +15,7 @@ import android.view.Window;
 import android.widget.Toast;
 import android.graphics.Bitmap;
 import android.util.Base64;
+import android.graphics.Color;
 
 import java.io.ByteArrayOutputStream;
 
@@ -185,15 +186,19 @@ public class ScanActionInsolbioActivity extends Activity {
                 int h = 0;
                 
                 try {
+                    
                     raw = data.getByteArrayExtra("finger_raw");
                     w = data.getIntExtra("finger_w", 0);
                     h = data.getIntExtra("finger_h", 0);
-                    Bitmap bmp = raw8ToGrayscaleBitmap(raw, w, h);
-                    byte[] pngBytes = bitmapToPngBytes(bmp);
-                    imgBase64String = Base64.encodeToString(pngBytes, Base64.NO_WRAP);
+
+                    // ejemplo: preview 256x256
+                    String pngPreviewB64 = raw8ToResizedPngBase64(raw, w, h, 256, 256);
+
+                    Log.i(LOG_TAG, "raw_len=" + (raw == null ? 0 : raw.length) + " w=" + w + " h=" + h);
+                    Log.i(LOG_TAG, "pngPreviewB64_len=" + (pngPreviewB64 == null ? 0 : pngPreviewB64.length()));
+
                     //imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
                     Log.i(TAG, "base64IMG: " + imgBase64String);
-                    Log.i(TAG, "pngBytes len=" + (pngBytes == null ? 0 : pngBytes.length));
                     Log.i(TAG, "raw len=" + (raw == null ? 0 : raw.length));    
                     intent.putExtra("pngbBytes", pngBytes);
                     intent.putExtra("raw_imag", raw);
@@ -242,26 +247,30 @@ public class ScanActionInsolbioActivity extends Activity {
         }
     }
 
-    private Bitmap raw8ToGrayscaleBitmap(byte[] raw, int width, int height) {
-        if (raw == null || width <= 0 || height <= 0 || raw.length < width * height) return null;
-
-        int size = width * height;
-        int[] pixels = new int[size];
-
-        for (int i = 0; i < size; i++) {
-            int g = raw[i] & 0xFF;
-            pixels[i] = 0xFF000000 | (g << 16) | (g << 8) | g;
+    private static String raw8ToResizedPngBase64(byte[] raw, int w, int h, int outW, int outH) {
+        // 1) Crear bitmap desde raw (grayscale 8-bit)
+        Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+    
+        int[] pixels = new int[w * h];
+        for (int i = 0; i < pixels.length; i++) {
+            int v = raw[i] & 0xFF;
+            pixels[i] = Color.rgb(v, v, v);
         }
-
-        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        bmp.setPixels(pixels, 0, width, 0, 0, width, height);
-        return bmp;
-    }
-
-    private byte[] bitmapToPngBytes(Bitmap bmp) {
+        bmp.setPixels(pixels, 0, w, 0, 0, w, h);
+    
+        // 2) Resize
+        Bitmap resized = Bitmap.createScaledBitmap(bmp, outW, outH, true);
+        bmp.recycle();
+    
+        // 3) PNG bytes
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        return baos.toByteArray();
+        resized.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        resized.recycle();
+    
+        byte[] pngBytes = baos.toByteArray();
+    
+        // 4) Base64 (sin saltos de línea)
+        return Base64.encodeToString(pngBytes, Base64.NO_WRAP);
     }
 
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
