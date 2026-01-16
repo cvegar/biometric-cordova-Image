@@ -126,15 +126,9 @@ public class BiometricCordova extends CordovaPlugin {
 
         if (resultCode == Activity.RESULT_OK && data != null) {
             try {
-                raw = data.getByteArrayExtra("finger_raw");
-                w = data.getIntExtra("finger_w", 0);
-                h = data.getIntExtra("finger_h", 0);
+               
 
-                CryptoUtil.loadKeys();
-                Bitmap bmp = raw8ToGrayscaleBitmap(raw, w, h);
-                byte[] pngBytes = bitmapToPngBytes(bmp);
-                imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
-                Log.i(TAG, "base64IMG: " + imgBase64String);
+                
                 // ✅ Devuelve TODOS los extras como JSON (ideal para “más outputs”)
                 JSONObject resp = intentExtrasToJson(data);
                 //resp.put("fingerpngb64", imgBase64String);
@@ -147,6 +141,7 @@ public class BiometricCordova extends CordovaPlugin {
                 cb.success(resp);
             } catch (Exception e) {
                 cb.error("ERROR building response: " + e.getMessage());
+                Log.i("ERROR building response: " + e.getMessage());
             }
             return;
         }
