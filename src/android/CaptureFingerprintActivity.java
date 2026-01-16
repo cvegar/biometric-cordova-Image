@@ -645,4 +645,6 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
         populateSpinner();
     }
 
+    
+
 }

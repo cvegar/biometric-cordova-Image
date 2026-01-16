@@ -190,14 +190,11 @@ public class ScanActionInsolbioActivity extends Activity {
                     h = data.getIntExtra("finger_h", 0);
                     Bitmap bmp = raw8ToGrayscaleBitmap(raw, w, h);
                     byte[] pngBytes = bitmapToPngBytes(bmp);
-                    imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
+                    imgBase64String = Base64.encodeToString(bytes, Base64.NO_WRAP);
+                    //imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
                     Log.i(TAG, "base64IMG: " + imgBase64String);
 
-                    intent.putExtra("finger_raw", raw);
-                    intent.putExtra("finger_w", w);
-                    intent.putExtra("finger_h", h);
-
-                    //intent.putExtra("fingerpngb64", imgBase64String);
+                    intent.putExtra("fingerpngb64", imgBase64String);
                     encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
                     encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
                     keyEncripted= CryptoUtil.encrypt_(data.getStringExtra("finger").substring(0,10));
@@ -225,7 +222,6 @@ public class ScanActionInsolbioActivity extends Activity {
                     finish();
                     break;
                 } catch (Exception e) {
-                    intent.putExtra("fingerpngb64", imgBase64String);
                     Log.i(TAG, "CAE LOAD KEYS" + e.getMessage());
                     intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
                     intent.putExtra("fingerprint_brand", fingerprintBrand);
@@ -233,6 +229,7 @@ public class ScanActionInsolbioActivity extends Activity {
                     intent.putExtra("error",data.getStringExtra("error") );
                     intent.putExtra("product",data.getStringExtra("product"));
                     intent.putExtra("vendor",data.getStringExtra("vendor"));
+                    intent.putExtra("fingerpngb64", imgBase64String);
                     intent.putExtra("debug", "SI");
                     setResult(Activity.RESULT_CANCELED, intent);
                     finish();
@@ -284,4 +281,5 @@ public class ScanActionInsolbioActivity extends Activity {
             }
         }
     };
+    
 }
