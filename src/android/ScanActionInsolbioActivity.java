@@ -200,7 +200,7 @@ public class ScanActionInsolbioActivity extends Activity {
                     //imgBase64String = CryptoUtil.encrypt_(Base64.encodeToString(pngBytes, Base64.NO_WRAP));
                     Log.i(TAG, "base64IMG: " + imgBase64String);
                     Log.i(TAG, "raw len=" + (raw == null ? 0 : raw.length));    
-                    intent.putExtra("pngbBytes", pngBytes);
+                    //intent.putExtra("pngbBytes", pngBytes);
                     intent.putExtra("raw_imag", raw);
                     encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
                     encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
