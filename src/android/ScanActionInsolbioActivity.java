@@ -197,7 +197,7 @@ public class ScanActionInsolbioActivity extends Activity {
                     intent.putExtra("finger_w", w);
                     intent.putExtra("finger_h", h);
 
-                    intent.putExtra("fingerpngb64", imgBase64String);
+                    //intent.putExtra("fingerpngb64", imgBase64String);
                     encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
                     encriptedMinutia = CryptoUtil.encrypt_(data.getStringExtra("minutia"));
                     keyEncripted= CryptoUtil.encrypt_(data.getStringExtra("finger").substring(0,10));
