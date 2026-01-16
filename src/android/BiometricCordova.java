@@ -141,7 +141,7 @@ public class BiometricCordova extends CordovaPlugin {
                 cb.success(resp);
             } catch (Exception e) {
                 cb.error("ERROR building response: " + e.getMessage());
-                Log.i("ERROR building response: " + e.getMessage());
+                Log.i(TAG, "ERROR building response: " + e.getMessage());
             }
             return;
         }
