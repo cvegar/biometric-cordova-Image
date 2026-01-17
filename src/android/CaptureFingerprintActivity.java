@@ -598,6 +598,8 @@ public class CaptureFingerprintActivity extends Activity implements OnItemSelect
             }
             m_reader.Close();
 
+            
+
             Intent i = new Intent();
             i.putExtra("device_name", m_deviceName);
             i.putExtra("finger", finalwsq);
