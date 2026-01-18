@@ -15,7 +15,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 import java.util.Arrays;
-import java.util.Base64;
+import java.io.ByteArrayOutputStream;
 
 import com.digitalpersona.uareu.Reader;
 import com.digitalpersona.uareu.UareUException;
@@ -23,6 +23,7 @@ import com.digitalpersona.uareu.dpfpddusbhost.DPFPDDUsbException;
 import com.digitalpersona.uareu.dpfpddusbhost.DPFPDDUsbHost;
 import com.rsa.CryptoUtil;
 
+import android.util.Base64;
 import SecuGen.FDxSDKPro.JSGFPLib;
 import SecuGen.FDxSDKPro.SGFDxDeviceName;
 import SecuGen.FDxSDKPro.SGFDxErrorCode;
