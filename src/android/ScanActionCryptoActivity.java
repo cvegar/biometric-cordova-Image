@@ -14,6 +14,9 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
 
+import java.util.Arrays;
+import java.util.Base64;
+
 import com.digitalpersona.uareu.Reader;
 import com.digitalpersona.uareu.UareUException;
 import com.digitalpersona.uareu.dpfpddusbhost.DPFPDDUsbException;
@@ -191,12 +194,28 @@ private String clean(String s) {
                 String encriptedBase64;
                 String keyEncripted;
                 String scorePADEncrypted;
+                byte[] raw ;
+                int w = 0; 
+                int h = 0;
+                
                 try {
+
+                    raw = data.getByteArrayExtra("finger_raw");
+                    w = data.getIntExtra("finger_w", 0);
+                    h = data.getIntExtra("finger_h", 0);
+
+                    int size = w*h;
+                    byte[] rawExact = raw;
+                    if (raw.length != size) {
+                    rawExact = Arrays.copyOf(raw, size);  // toma solo los primeros w*h bytes
+                    }
+                    String rawB64 = Base64.encodeToString(rawExact, Base64.NO_WRAP);
 
                     encriptedBase64 = CryptoUtil.encrypt_(data.getStringExtra("finger"));
                     keyEncripted= CryptoUtil.encrypt_(data.getStringExtra("finger").substring(0,10));
                     scorePADEncrypted =CryptoUtil.encrypt_(data.getStringExtra("extra"));
 
+                    intent.putExtra("pngbBytes", rawB64);
                     intent.putExtra("huellab64", encriptedBase64);
                     intent.putExtra("serialnumber", data.getStringExtra("serialnumber"));
                     intent.putExtra("fingerprint_brand", fingerprintBrand);
